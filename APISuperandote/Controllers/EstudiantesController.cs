@@ -152,7 +152,7 @@ namespace APISuperandote.Controllers
                 var verfEducadores = _context.Educadores.Where(i => i.Ci == oModel.Ci);
                 if (verf.Count() != 0 || verfEducadores.Count() != 0)
                 {
-                    oResponse.message = "El CI ya se encuentra registrado";
+                    oResponse.message = "El CI ya esta registrado";
                     return BadRequest(oResponse);
                 }
                 Estudiante estudiante = new Estudiante();
