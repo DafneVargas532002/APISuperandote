@@ -21,16 +21,27 @@ namespace APISuperandote.Controllers
         [HttpGet("getAllUsers")]
         public IActionResult getAllUsers()
         {
+            int ci = 0;
             Response oResponse = new Response();
             try
             {
                 var datos = _context.Usuarios.Select(i => new
                 {
-                    Id=i.Id,
+                    Id = i.Id,
                     CI = i.Ci,
+                    nombres = _context.Estudiantes.Where(e => e.Ci == i.Ci).Select(e => e.Nombres)
+                    .FirstOrDefault() ??
+                    _context.Educadores.Where(ed => ed.Ci == i.Ci).Select(ed => ed.Nombres)
+                    .FirstOrDefault(),
+                    apellidos = _context.Estudiantes.Where(e => e.Ci == i.Ci).Select(e => e.Apellidos)
+                    .FirstOrDefault() ??
+                    _context.Educadores.Where(ed => ed.Ci == i.Ci).Select(ed => ed.Apellidos)
+                    .FirstOrDefault(),
                     Rol = i.IdRolNavigation.NombreRol,
                     i.Estado
                 });
+
+
                 if (datos.Count() == 0)
                 {
                     oResponse.message = "No se encontraron datos";
