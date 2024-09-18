@@ -212,6 +212,7 @@ namespace APISuperandote.Controllers
             try
             {
                 var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Ci == ci);
+                var estudianteusuario = _context.Usuarios.FirstOrDefault(e => e.Ci == ci);
                 if (estudiante == null)
                 {
                     oResponse.message = "El estudiante no existe";
@@ -223,6 +224,11 @@ namespace APISuperandote.Controllers
                     return BadRequest(oResponse);
                 }
                 estudiante.Estado = false;
+                if (estudianteusuario != null)
+                {
+                    estudianteusuario.Estado = false;
+                    _context.Usuarios.Update(estudianteusuario);
+                }
                 _context.Estudiantes.Update(estudiante);
                 _context.SaveChanges();
                 oResponse.success = 1;
@@ -243,6 +249,7 @@ namespace APISuperandote.Controllers
             try
             {
                 var estudiante = _context.Estudiantes.FirstOrDefault(e => e.Ci == ci);
+                var estudianteusuario = _context.Usuarios.FirstOrDefault(e => e.Ci == ci);
                 if (estudiante == null)
                 {
                     oResponse.message = "El estudiante no existe";
@@ -254,6 +261,11 @@ namespace APISuperandote.Controllers
                     return BadRequest(oResponse);
                 }
                 estudiante.Estado = true;
+                if (estudianteusuario != null)
+                {
+                    estudianteusuario.Estado = false;
+                    _context.Usuarios.Update(estudianteusuario);
+                }
                 _context.Estudiantes.Update(estudiante);
                 _context.SaveChanges();
                 oResponse.success = 1;

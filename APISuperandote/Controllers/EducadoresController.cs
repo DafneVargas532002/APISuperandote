@@ -213,9 +213,14 @@ namespace APISuperandote.Controllers
                     return BadRequest(oResponse);
                 }
                 educador.Estado = false;
-                educadorusuario.Estado = false;
+                if (educadorusuario != null)
+                {
+                    educadorusuario.Estado = false;
+                    _context.Usuarios.Update(educadorusuario);
+                }
+                
                 _context.Educadores.Update(educador);
-                _context.Usuarios.Update(educadorusuario);
+                
                 _context.SaveChanges();
                 oResponse.success = 1;
                 oResponse.data = educador;
@@ -247,9 +252,14 @@ namespace APISuperandote.Controllers
                     return BadRequest(oResponse);
                 }
                 educador.Estado = true;
-                educadorusuario.Estado = true;
+                if (educadorusuario != null)
+                {
+                    educadorusuario.Estado = true;
+                    _context.Usuarios.Update(educadorusuario);
+                }
+               
                 _context.Educadores.Update(educador);
-                _context.Usuarios.Update(educadorusuario);
+                
                 _context.SaveChanges();
                 oResponse.success = 1;
                 oResponse.data = educador;
